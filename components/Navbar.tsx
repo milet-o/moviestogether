@@ -2,8 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
-import { Home, BookMarked, History, Heart, LogOut, Search } from 'lucide-react'
+import { Home, BookMarked, History, LogOut, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
@@ -15,8 +14,8 @@ interface NavbarProps {
 
 const navItems = [
   { href: '/', label: 'Início', icon: Home },
-  { href: '/watchlist', label: 'Lista', icon: BookMarked },
-  { href: '/history', label: 'Diário', icon: History },
+  { href: '/watchlist', label: 'Watchlist', icon: BookMarked },
+  { href: '/history', label: 'Histórico', icon: History },
 ]
 
 export default function Navbar({ user, partner, onSearch }: NavbarProps) {
@@ -29,91 +28,53 @@ export default function Navbar({ user, partner, onSearch }: NavbarProps) {
     router.push('/login')
   }
 
-  // Get first name
   const firstName = user.name?.split(' ')[0] || 'Você'
   const partnerFirstName = partner?.name?.split(' ')[0] || ''
 
   return (
-    <>
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-cinema-border flex items-center px-6 justify-between text-cinema-text">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <Heart size={20} className="text-cinema-rose fill-cinema-rose group-hover:scale-110 transition-transform" />
-            <span className="font-bold text-sm tracking-widest uppercase hidden sm:block">
-              {partnerFirstName ? `${firstName} & ${partnerFirstName}` : 'MoviesTogether'}
-            </span>
-          </Link>
+    <div className="fixed top-0 left-0 right-0 z-50 p-2 pointer-events-none">
+      <div className="win95-window p-[2px] shadow-[4px_4px_0_rgba(0,0,0,0.2)] max-w-7xl mx-auto pointer-events-auto">
+        
+        {/* Title Bar */}
+        <div className="win95-titlebar font-win95 text-lg">
+          <div className="flex items-center gap-2 px-1">
+            <span className="bg-white/80 shrink-0 w-4 h-4 shadow-[1px_1px_rgba(0,0,0,0.5)]"></span>
+            <span>Nosso Diário de Filmes - {partnerFirstName ? `${firstName} & ${partnerFirstName}` : firstName}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 leading-none" onClick={onSearch}>?</button>
+            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 leading-none">_</button>
+            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 pb-1 leading-none">□</button>
+            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 font-bold leading-none" onClick={signOut}>x</button>
+          </div>
+        </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            {navItems.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors ${
-                  pathname === href
-                    ? 'text-cinema-rose bg-cinema-rose/10'
-                    : 'text-cinema-muted hover:text-cinema-text hover:bg-cinema-surface'
-                }`}
-              >
-                {label}
+        {/* Toolbar / Menu */}
+        <div className="p-1 flex items-center gap-1 font-win95 text-lg bg-[#c0c0c0]">
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const isActive = pathname === href
+            return (
+              <Link key={href} href={href}>
+                <button 
+                  className={`win95-btn flex items-center gap-1.5 px-3 py-0.5 ${isActive ? 'bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIiPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9IiNjMGMwYzAiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjODA4MDgwIi8+PC9zdmc+")] border-color-[#808080_#ffffff_#ffffff_#808080] box-shadow-[inset_1px_1px_0px_#808080]' : ''}`}
+                  style={isActive ? { borderColor: '#808080 #ffffff #ffffff #808080', boxShadow: 'inset 1px 1px 0px #808080' } : {}}
+                >
+                  <Icon size={14} className={isActive ? 'text-black' : 'text-black'} strokeWidth={2.5}/>
+                  {label}
+                </button>
               </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <button
+            )
+          })}
+          
+          <button 
+            className="win95-btn flex items-center gap-1.5 px-3 py-0.5 ml-auto"
             onClick={onSearch}
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-cinema-surface border border-cinema-border hover:border-cinema-rose/50 text-cinema-muted hover:text-cinema-rose transition-colors"
-            title="Buscar filme"
           >
-            <Search size={16} />
-          </button>
-          
-          <div className="flex -space-x-2">
-            {user.avatar ? (
-               <Image src={user.avatar} alt="User" width={32} height={32} className="rounded-full border-2 border-white shadow-sm z-10" />
-            ) : (
-               <div className="w-8 h-8 rounded-full border-2 border-white bg-cinema-accent/20 flex items-center justify-center text-xs font-bold text-cinema-accent z-10">
-                 {firstName[0]}
-               </div>
-            )}
-            {partner && (
-              partner.avatar ? (
-                <Image src={partner.avatar} alt="Partner" width={32} height={32} className="rounded-full border-2 border-white shadow-sm z-0" />
-              ) : (
-                <div className="w-8 h-8 rounded-full border-2 border-white bg-cinema-rose/20 flex items-center justify-center text-xs font-bold text-cinema-rose z-0">
-                  {partnerFirstName[0] ?? '?'}
-                </div>
-              )
-            )}
-          </div>
-          
-          <button
-            onClick={signOut}
-            className="text-cinema-muted hover:text-cinema-rose transition-colors"
-            title="Sair"
-          >
-            <LogOut size={16} />
+            <Search size={14} strokeWidth={2.5}/> Buscar
           </button>
         </div>
-      </nav>
-
-      {/* Mobile Bottom Nav - now hidden inside the new minimal layout, but keeping for very small screens if needed, replacing text colors */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 h-14 glass border-t border-cinema-border flex items-center justify-around px-2">
-        {navItems.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-colors ${
-              pathname === href ? 'text-cinema-rose' : 'text-cinema-muted'
-            }`}
-          >
-            <Icon size={18} />
-            <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
-          </Link>
-        ))}
-      </nav>
-    </>
+        
+      </div>
+    </div>
   )
 }

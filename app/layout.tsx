@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, VT323, Caveat } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -8,10 +8,23 @@ const inter = Inter({
   display: 'swap',
 })
 
+const vt323 = VT323({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-win95',
+  display: 'swap',
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-handwriting',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'MoviesTogether — Watch Together, Remember Together',
-  description: 'The cinematic watchlist app for couples. Track movies you want to watch and review the ones you\'ve seen together.',
-  keywords: ['movies', 'couples', 'watchlist', 'film', 'reviews'],
+  title: 'MoviesTogether — Nosso Diário de Filmes',
+  description: 'O álbum de recortes dos filmes do casal.',
+  keywords: ['movies', 'couples', 'watchlist', 'film', 'reviews', 'scrapbook'],
   openGraph: {
     title: 'MoviesTogether',
     description: 'Watch together, remember together.',
@@ -26,8 +39,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} font-sans antialiased text-cinema-text min-h-screen w-full flex flex-col overflow-x-hidden relative`}>
-        <div className="absolute inset-0 bg-paper z-[-1]"></div>
+      <body className={`${inter.variable} ${vt323.variable} ${caveat.variable} font-sans antialiased text-cinema-text min-h-screen w-full overflow-x-hidden relative bg-[#e4d5b7]`}>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cardboard-flat.png')] opacity-80 mix-blend-multiply z-[0] pointer-events-none"></div>
         {children}
       </body>
     </html>
