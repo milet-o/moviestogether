@@ -30,18 +30,29 @@ export default function CouplePage() {
   const [copied, setCopied] = useState(false)
   const [feedback, setFeedback] = useState<{ msg: string; type: 'success' | 'error' } | null>(null)
 
-  const fetchCouple = useCallback(async () => {
-    setLoading(true)
+  const fetchCouple = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true)
     const res = await fetch('/api/couple')
     const data = await res.json()
-    setCoupleInfo(data)
-    setLoading(false)
+    if (!silent) setCoupleInfo(data)
+    if (!silent) setLoading(false)
+    
     if (data.coupled) {
+      if (silent) setCoupleInfo(data)
       setTimeout(() => router.push('/'), 1500)
     }
   }, [router])
 
   useEffect(() => { fetchCouple() }, [fetchCouple])
+
+  // Checa automaticamente a cada 3 segundos se alguém aceitou o código
+  useEffect(() => {
+    if (!inviteCode) return
+    const interval = setInterval(() => {
+      fetchCouple(true)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [inviteCode, fetchCouple])
 
   async function generateInvite() {
     setCodeLoading(true)
