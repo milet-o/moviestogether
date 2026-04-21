@@ -9,18 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        paper: '#faf7f5', // Fundo principal cremoso
         cinema: {
-          bg: '#080b12',
-          surface: '#0f1420',
-          card: '#141926',
-          border: '#1e2535',
-          text: '#e8eaf0',
-          muted: '#6b7280',
-          accent: '#c084fc',
-          'accent-hover': '#a855f7',
-          rose: '#f472b6',
-          gold: '#fbbf24',
-          green: '#34d399',
+          bg: '#faf7f5',
+          surface: '#ffffff',
+          card: '#ffffff',
+          border: '#f0e6e6',
+          text: '#4a4040', // Cinza escuro fofo
+          muted: '#8e8484',
+          accent: '#ffb6c1', // Rosa claro / Light pink
+          'accent-hover': '#ff9eb1',
+          rose: '#ff8da1',
+          gold: '#fcd34d',
+          green: '#6ee7b7',
         },
       },
       fontFamily: {
