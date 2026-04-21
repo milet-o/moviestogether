@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Heart, Star, BookMarked, Film, TrendingUp, Plus, Loader2, ChevronRight, CheckCircle, Trash2, Eye } from 'lucide-react'
+import { Heart, Star, BookMarked, Film, TrendingUp, Plus, Loader2, ChevronRight, CheckCircle, Trash2, Eye, Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
