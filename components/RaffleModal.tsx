@@ -114,17 +114,17 @@ export default function RaffleModal({ isOpen, watchlist, onClose }: RaffleModalP
                         <div className="text-xl px-4 py-2 bg-white border border-gray-500">{watchlist.filter(w=>selectedIds.has(w.id))[currentIndex].title}</div>
                    )}
                </div>
-           ) : winner ? (
+           ) : (
                <div className="py-6 flex flex-col items-center justify-center">
                    <h2 className="text-2xl font-bold mb-4 bg-yellow-200 border border-yellow-400 px-2 shadow">🎯 Temos um vencedor!</h2>
                    
                    <div className="polaroid w-40 shrink-0 transform rotate-1 border border-gray-300 pointer-events-none mb-4">
                         <div className="w-full aspect-[2/3] bg-black relative shadow-inner overflow-hidden border border-gray-200">
-                           {winner.poster_url && <Image src={winner.poster_url} alt={winner.title} fill className="object-cover" />}
+                           {winner?.poster_url && <Image src={winner.poster_url} alt={winner?.title} fill className="object-cover" />}
                         </div>
                    </div>
 
-                   <p className="text-2xl font-bold">{winner.title}</p>
+                   <p className="text-2xl font-bold">{winner?.title}</p>
                    
                    <div className="mt-8 flex gap-2 w-full justify-center">
                        <button className="win95-btn px-6 py-2 font-bold text-sm bg-[#000080]" onClick={onClose}>
