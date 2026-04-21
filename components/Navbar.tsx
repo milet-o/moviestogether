@@ -13,9 +13,8 @@ interface NavbarProps {
 }
 
 const navItems = [
-  { href: '/', label: 'Início', icon: Home },
-  { href: '/watchlist', label: 'Watchlist', icon: BookMarked },
-  { href: '/history', label: 'Histórico', icon: History },
+  { href: '/', label: 'Nossa Fila', icon: Home },
+  { href: '/history', label: 'Diário (Já Vimos)', icon: History },
 ]
 
 export default function Navbar({ user, partner, onSearch }: NavbarProps) {
@@ -32,25 +31,25 @@ export default function Navbar({ user, partner, onSearch }: NavbarProps) {
   const partnerFirstName = partner?.name?.split(' ')[0] || ''
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 p-2 pointer-events-none">
-      <div className="win95-window p-[2px] shadow-[4px_4px_0_rgba(0,0,0,0.2)] max-w-7xl mx-auto pointer-events-auto">
+    <div className="fixed top-0 left-0 right-0 z-[100] pointer-events-none">
+      <div className="win95-window w-full shadow-md pointer-events-auto border-t-0 border-l-0 border-r-0">
         
         {/* Title Bar */}
-        <div className="win95-titlebar font-win95 text-lg">
-          <div className="flex items-center gap-2 px-1">
+        <div className="win95-titlebar font-win95 text-[22px] py-1 px-2">
+          <div className="flex items-center gap-2">
             <span className="bg-white/80 shrink-0 w-4 h-4 shadow-[1px_1px_rgba(0,0,0,0.5)]"></span>
-            <span>Nosso Diário de Filmes - {partnerFirstName ? `${firstName} & ${partnerFirstName}` : firstName}</span>
+            <span className="font-bold tracking-wider">Nosso Diário de Filmes - {partnerFirstName ? `${firstName} & ${partnerFirstName}` : firstName}</span>
           </div>
           <div className="flex items-center gap-1">
-            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 leading-none" onClick={onSearch}>?</button>
-            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 leading-none">_</button>
-            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 pb-1 leading-none">□</button>
-            <button className="win95-btn flex items-center justify-center w-6 h-6 p-0 font-bold leading-none" onClick={signOut}>x</button>
+            <button className="win95-btn flex items-center justify-center w-7 h-7 p-0 leading-none" onClick={onSearch}>?</button>
+            <button className="win95-btn flex items-center justify-center w-7 h-7 p-0 leading-none">_</button>
+            <button className="win95-btn flex items-center justify-center w-7 h-7 p-0 pb-1 leading-none">□</button>
+            <button className="win95-btn flex items-center justify-center w-7 h-7 p-0 font-bold leading-none text-red-700" onClick={signOut}>X</button>
           </div>
         </div>
 
         {/* Toolbar / Menu */}
-        <div className="p-1 flex items-center gap-1 font-win95 text-lg bg-[#c0c0c0]">
+        <div className="py-2 px-3 flex items-center gap-3 font-win95 text-xl bg-[#c0c0c0] border-t border-[#dfdfdf]">
           {navItems.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href
             return (

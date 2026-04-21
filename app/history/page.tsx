@@ -71,7 +71,7 @@ export default function HistoryPage() {
   if (loading) return null
 
   return (
-    <div className="min-h-screen pt-32 pb-20 w-full overflow-x-hidden flex flex-col items-center relative">
+    <div className="min-h-screen pt-44 pb-20 w-full overflow-x-hidden flex flex-col items-center relative">
       <Navbar 
         user={{ name: userName, avatar: userAvatar }} 
         partner={{ name: partnerName, avatar: partnerAvatar }}

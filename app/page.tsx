@@ -142,7 +142,7 @@ export default function HomePage() {
   if (loading) return null
 
   return (
-    <div className="min-h-screen pt-32 pb-20 w-full overflow-x-hidden flex flex-col items-center relative">
+    <div className="min-h-screen pt-44 pb-20 w-full overflow-x-hidden flex flex-col items-center relative">
       <Navbar 
         user={{ name: userName, avatar: userAvatar }} 
         partner={{ name: partnerName, avatar: partnerAvatar }}
@@ -195,9 +195,9 @@ export default function HomePage() {
         )}
 
         {/* Watchlist Section */}
-        <div className="relative z-10 w-full mb-16 flex flex-col items-center">
+        <div className="relative z-10 w-full mb-16 flex flex-col items-center md:items-start pl-0 md:pl-8">
           {watchlist.length === 0 ? (
-            <div className="sticky-note max-w-sm mt-8 transform rotate-rand-1">
+            <div className="sticky-note max-w-sm mt-8 transform rotate-rand-1 mx-auto md:mx-0">
               <h2 className="font-handwriting text-4xl mb-4 font-bold text-gray-800">Cineminha Vazio</h2>
               <p className="font-handwriting text-xl text-gray-700 leading-relaxed mb-6">
                 A fila está vazia. Busquem um filme de terror, romance ou comédia para assistirem grudadinhos.
@@ -212,7 +212,7 @@ export default function HomePage() {
           ) : (
             <>
               {/* Header with Title and Raffle */}
-              <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
+              <div className="flex flex-col md:flex-row items-center gap-6 mb-12 self-center md:self-start">
                   <div className="font-handwriting text-3xl font-bold transform -rotate-1 text-gray-800 uppercase tracking-widest inline-block bg-[#fef08a] px-4 py-1 shadow-sm border border-yellow-300 relative">
                     <div className="absolute -top-3 left-1/2 -ml-2 w-4 h-4 rounded-full bg-red-400 shadow-sm"></div>
                     Próximos da Fila
@@ -226,9 +226,10 @@ export default function HomePage() {
                   </button>
               </div>
 
-              <div className="flex flex-wrap gap-x-8 gap-y-12 justify-center pl-2 md:pl-0">
+              {/* Fix: Using grid to prevent centered layout breaks and keep them left-aligned */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
                 {watchlist.map((item, i) => (
-                  <div key={item.id} className={`polaroid w-44 md:w-52 shrink-0 ${randomRotation(i)}`}>
+                  <div key={item.id} className={`polaroid w-44 md:w-52 mx-auto justify-self-center ${randomRotation(i)}`}>
                     <div className="tape"></div>
                     <div className="w-full aspect-[2/3] bg-black relative shadow-inner overflow-hidden border border-gray-200">
                       {item.poster_url && <Image src={item.poster_url} alt={item.title} fill className="object-cover" />}
